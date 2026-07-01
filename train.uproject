@@ -5,17 +5,6 @@
 	"Description": "",
 	"Plugins": [
 		{
-			"Name": "OpenXR",
-			"Enabled": true
-		},
-		{
-			"Name": "VirtualScouting",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64"
-			]
-		},
-		{
 			"Name": "PythonScriptPlugin",
 			"Enabled": true
 		},
