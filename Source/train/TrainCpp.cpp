@@ -33,9 +33,11 @@ void ATrainCpp::Tick(float DeltaTime)
 		currentLocation,
 		ESplineCoordinateSpace::World);
 
-	FRotator Rotation = Track->GetRotationAtDistanceAlongSpline(
+	FRotator TargetRotation = Track->GetRotationAtDistanceAlongSpline(
 		currentLocation,
 		ESplineCoordinateSpace::World);
+
+	FRotator Rotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, DeltaTime, 0.5f);
 
 	SetActorLocation(Location);
 	SetActorRotation(Rotation);
