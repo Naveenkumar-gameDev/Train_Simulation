@@ -2,6 +2,7 @@
 
 
 #include "TrainCpp.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATrainCpp::ATrainCpp()
@@ -23,6 +24,21 @@ void ATrainCpp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (!Track)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Error"));
+		return;
+	}
+
+	//Move Train
+	currentLocation += speed * DeltaTime;
+
+	FVector location = Track->GetLocationAtDistanceAlongSpline(currentLocation, ESplineCoordinateSpace::World);
+
+	FRotator rotation = Track->GetRotationAtDistanceAlongSpline(currentLocation, ESplineCoordinateSpace::World);
+
+	SetActorLocation(location);
+	SetActorRotation(rotation);
 }
 
 // Called to bind functionality to input

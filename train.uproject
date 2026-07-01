@@ -39,10 +39,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "VirtualCamera",
-			"Enabled": true
-		},
-		{
 			"Name": "LiveLink",
 			"Enabled": true
 		},
@@ -120,10 +116,6 @@
 				"Linux",
 				"Android"
 			]
-		},
-		{
-			"Name": "PixelStreaming",
-			"Enabled": true
 		},
 		{
 			"Name": "VariantManager",

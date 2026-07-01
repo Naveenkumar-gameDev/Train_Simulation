@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Components/SplineComponent.h"
 #include "TrainCpp.generated.h"
 
 UCLASS()
@@ -26,7 +27,12 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	USplineComponent* Track;
+
 	UPROPERTY(EditAnywhere)
-	AActor* Track;
+	float speed;
+
+	float currentLocation=0.0f;
 
 };
