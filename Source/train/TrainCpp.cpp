@@ -24,14 +24,11 @@ void ATrainCpp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!Track)
-	{
-		UE_LOG(LogTemp, Display, TEXT("Error"));
-		return;
-	}
+	if (!Track) return;
+	
 
 	//Move Train
-	currentLocation += speed * DeltaTime;
+	currentLocation += (speed *0.44704) * DeltaTime;
 
 	FVector location = Track->GetLocationAtDistanceAlongSpline(currentLocation, ESplineCoordinateSpace::World);
 
