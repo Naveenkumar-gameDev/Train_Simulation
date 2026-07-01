@@ -26,16 +26,19 @@ void ATrainCpp::Tick(float DeltaTime)
 
 	if (!Track) return;
 	
-
 	//Move Train
-	currentLocation += (speed *0.44704) * DeltaTime;
+	currentLocation += (speed * mphValue) * DeltaTime;
 
-	FVector location = Track->GetLocationAtDistanceAlongSpline(currentLocation, ESplineCoordinateSpace::World);
+	FVector Location = Track->GetLocationAtDistanceAlongSpline(
+		currentLocation,
+		ESplineCoordinateSpace::World);
 
-	FRotator rotation = Track->GetRotationAtDistanceAlongSpline(currentLocation, ESplineCoordinateSpace::World);
+	FRotator Rotation = Track->GetRotationAtDistanceAlongSpline(
+		currentLocation,
+		ESplineCoordinateSpace::World);
 
-	SetActorLocation(location);
-	SetActorRotation(rotation);
+	SetActorLocation(Location);
+	SetActorRotation(Rotation);
 }
 
 // Called to bind functionality to input

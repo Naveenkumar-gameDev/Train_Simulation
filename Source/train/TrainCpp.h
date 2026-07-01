@@ -27,12 +27,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Train")
 	USplineComponent* Track;
 
 	UPROPERTY(EditAnywhere)
 	float speed;
 
 	float currentLocation=0.0f;
+
+	static constexpr float mphValue= 44.704f;
 
 };
