@@ -37,4 +37,7 @@ public:
 
 	static constexpr float mphValue= 44.704f;
 
+	UFUNCTION()
+	void SetSpeed(float value);
+
 };

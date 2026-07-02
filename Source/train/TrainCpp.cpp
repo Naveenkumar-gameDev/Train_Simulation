@@ -50,3 +50,8 @@ void ATrainCpp::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATrainCpp::SetSpeed(float value) 
+{
+	speed = value;
+}
+
