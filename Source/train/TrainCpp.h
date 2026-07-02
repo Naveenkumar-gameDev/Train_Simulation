@@ -31,7 +31,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Train")
 	USplineComponent* Track;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VALUE")
 	float speed;
 
 	float currentLocation=0.0f;
@@ -41,6 +41,6 @@ public:
 	UFUNCTION()
 	void SetSpeed(float value);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "VALUE")
 	TSubclassOf<UTrainHUD> TrainHUDClass;
 };

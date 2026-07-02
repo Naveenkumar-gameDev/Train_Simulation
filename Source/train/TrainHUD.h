@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Slider.h"
+#include "Components/SpinBox.h"
 #include "TrainCpp.h"
 #include "TrainHUD.generated.h"
 
@@ -23,11 +24,25 @@ protected:
 	UPROPERTY(meta=(BindWidget))
 	USlider* speedSlider;
 
-	UFUNCTION()
+	UPROPERTY(meta = (BindWidget))
+	USpinBox* speedSpinBox;
+
+	UFUNCTION() 
 	void OnSliderValueChanged(float value);
+
+
+	UFUNCTION()
+	void OnSliderChanged(float Value);
+
+	UFUNCTION()
+	void OnSpinBoxChanged(float Value);
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ATrainCpp* Train;
+
+
+private:
+	bool bUpdatingUI = false;
 
 };
