@@ -7,7 +7,7 @@
 #include "Components/SplineComponent.h"
 #include "TrainCpp.generated.h"
 class UTrainHUD;
-class USignal;
+class ASignal;
 
 UCLASS()
 class TRAIN_API ATrainCpp : public APawn
@@ -51,7 +51,7 @@ public:
 
 public:
 	UPROPERTY(BlueprintReadWrite)
-	TArray<USignal*> allSignals;
+	TArray<ASignal*> allSignals;
 
 
 
