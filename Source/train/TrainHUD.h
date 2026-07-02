@@ -84,6 +84,7 @@ protected:
     void BackBtnClicked();
 
 public:
+    UPROPERTY(BlueprintReadWrite)
     ASignal* currentSignal;
 
 #pragma endregion
