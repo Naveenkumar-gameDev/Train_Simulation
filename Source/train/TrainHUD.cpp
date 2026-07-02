@@ -112,22 +112,22 @@ void UTrainHUD::RightBtnClicked()
 
 void UTrainHUD::UpBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue);
+    currentSignal->MoveUpDown(moveValue);
 }
 
 void UTrainHUD::DownBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue*-1);
+    currentSignal->MoveUpDown(moveValue*-1);
 }
 
 void UTrainHUD::ForBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue);
+    currentSignal->MoveForBack(moveValue);
 }
 
 void UTrainHUD::BackBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue*-1);
+    currentSignal->MoveForBack(moveValue*-1);
 }
 
 
