@@ -17,7 +17,7 @@ void ATrainCpp::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UTrainHUD* TrainHUD = CreateWidget<UTrainHUD>(GetWorld(), TrainHUDClass);
+	TrainHUD = CreateWidget<UTrainHUD>(GetWorld(), TrainHUDClass);
 
 	if (TrainHUD)
 	{

@@ -32,8 +32,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "VALUE")
 	USplineComponent* Track;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VALUE")
+	UPROPERTY(EditAnywhere, Category = "VALUE")
 	TSubclassOf<UTrainHUD> TrainHUDClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "VALUE")
+	UTrainHUD* TrainHUD;
 
 #pragma region SpeedControl
 
