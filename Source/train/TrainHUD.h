@@ -6,6 +6,7 @@
 #include "Components/SpinBox.h"
 #include "Components/Button.h"
 #include "TrainCpp.h"
+#include "Signal.h"
 #include "TrainHUD.generated.h"
 
 UCLASS()
@@ -47,6 +48,9 @@ private:
 #pragma region Signal control
 protected:
 
+    UPROPERTY(EditAnywhere)
+    float moveValue;
+
     UPROPERTY(meta=(BindWidget))
     UButton* leftBTN;
 
@@ -64,6 +68,23 @@ protected:
 
     UPROPERTY(meta = (BindWidget))
     UButton* backBTN;
+
+
+    UFUNCTION()
+    void LeftBtnClicked();
+    UFUNCTION()
+    void RightBtnClicked();
+    UFUNCTION()
+    void UpBtnClicked();
+    UFUNCTION()
+    void DownBtnClicked();
+    UFUNCTION()
+    void ForBtnClicked();
+    UFUNCTION()
+    void BackBtnClicked();
+
+public:
+    ASignal* currentSignal;
 
 #pragma endregion
 };

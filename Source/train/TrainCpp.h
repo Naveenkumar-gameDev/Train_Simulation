@@ -7,6 +7,7 @@
 #include "Components/SplineComponent.h"
 #include "TrainCpp.generated.h"
 class UTrainHUD;
+class USignal;
 
 UCLASS()
 class TRAIN_API ATrainCpp : public APawn
@@ -28,8 +29,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Train")
+	UPROPERTY(BlueprintReadWrite, Category = "VALUE")
 	USplineComponent* Track;
+
+	UPROPERTY(EditAnywhere, Category = "VALUE")
+	TSubclassOf<UTrainHUD> TrainHUDClass;
+
+#pragma region SpeedControl
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VALUE")
 	float speed;
@@ -41,6 +47,13 @@ public:
 	UFUNCTION()
 	void SetSpeed(float value);
 
-	UPROPERTY(EditAnywhere, Category = "VALUE")
-	TSubclassOf<UTrainHUD> TrainHUDClass;
+#pragma endregion
+
+public:
+	UPROPERTY(BlueprintReadWrite)
+	TArray<USignal*> allSignals;
+
+
+
+
 };
