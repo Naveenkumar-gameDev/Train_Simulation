@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Components/SplineComponent.h"
 #include "TrainCpp.generated.h"
+class UTrainHUD;
 
 UCLASS()
 class TRAIN_API ATrainCpp : public APawn
@@ -40,4 +41,6 @@ public:
 	UFUNCTION()
 	void SetSpeed(float value);
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UTrainHUD> TrainHUDClass;
 };

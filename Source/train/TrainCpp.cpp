@@ -3,7 +3,7 @@
 
 #include "TrainCpp.h"
 #include "Kismet/GameplayStatics.h"
-
+#include "TrainHUD.h"
 // Sets default values
 ATrainCpp::ATrainCpp()
 {
@@ -17,6 +17,13 @@ void ATrainCpp::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	UTrainHUD* TrainHUD = CreateWidget<UTrainHUD>(this, TrainHUDClass);
+
+	if (TrainHUD)
+	{
+		TrainHUD->AddToViewport();
+		TrainHUD->Train = this;
+	}
 }
 
 // Called every frame
