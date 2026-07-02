@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -9,40 +7,36 @@
 #include "TrainCpp.h"
 #include "TrainHUD.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class TRAIN_API UTrainHUD : public UUserWidget
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
 
 protected:
-	virtual bool Initialize() override;
 
-	UPROPERTY(meta=(BindWidget))
-	USlider* speedSlider;
+    virtual bool Initialize() override;
 
-	UPROPERTY(meta = (BindWidget))
-	USpinBox* speedSpinBox;
+    UPROPERTY(meta = (BindWidget))
+    USlider* speedSlider;
 
-	UFUNCTION() 
-	void OnSliderValueChanged(float value);
+    UPROPERTY(meta = (BindWidget))
+    USpinBox* speedSpinBox;
 
+    UFUNCTION()
+    void OnSliderChanged(float Value);
 
-	UFUNCTION()
-	void OnSliderChanged(float Value);
-
-	UFUNCTION()
-	void OnSpinBoxChanged(float Value);
+    UFUNCTION()
+    void OnSpinBoxChanged(float Value);
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ATrainCpp* Train;
 
+    UPROPERTY(BlueprintReadWrite)
+    ATrainCpp* Train;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    float maxTrainSpeed = 80.0f;
 
 private:
-	bool bUpdatingUI = false;
 
+    bool bUpdatingUI = false;
 };
