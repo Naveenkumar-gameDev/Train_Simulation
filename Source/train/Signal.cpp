@@ -25,3 +25,22 @@ void ASignal::Tick(float DeltaTime)
 
 }
 
+void ASignal::MoveLeftRight(float value)
+{
+	FVector newPos = FVector(GetActorLocation().X, GetActorLocation().Y + value, GetActorLocation().Z);
+	SetActorLocation(newPos);
+}
+
+void ASignal::MoveUpDown(float value)
+{
+	FVector newPos = FVector(GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z + value);
+	SetActorLocation(newPos);
+}
+
+void ASignal::MoveForBack(float value)
+{
+	FVector newPos = FVector(GetActorLocation().X + value, GetActorLocation().Y, GetActorLocation().Z);
+	SetActorLocation(newPos);
+}
+
+

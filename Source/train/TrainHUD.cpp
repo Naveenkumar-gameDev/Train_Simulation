@@ -38,7 +38,7 @@ bool UTrainHUD::Initialize()
 
     return true;
 }
-
+#pragma region SpeedControl
 void UTrainHUD::OnSliderChanged(float Value)
 {
     if (bUpdatingUI)
@@ -82,3 +82,9 @@ void UTrainHUD::OnSpinBoxChanged(float Value)
 
     bUpdatingUI = false;
 }
+#pragma endregion
+
+#pragma region Signal Control
+
+
+#pragma endregion

@@ -19,8 +19,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* Base;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void MoveLeftRight(float value);
+
+	UFUNCTION()
+	void MoveUpDown(float value);
+
+	UFUNCTION()
+	void MoveForBack(float value);
 };
