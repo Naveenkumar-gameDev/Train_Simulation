@@ -102,32 +102,32 @@ void UTrainHUD::OnSpinBoxChanged(float Value)
 
 void UTrainHUD::LeftBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue);
+    currentSignal->MoveLeftRight(moveValue * -1);
 }
 
 void UTrainHUD::RightBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue*-1);
+    currentSignal->MoveLeftRight(moveValue);
 }
 
 void UTrainHUD::UpBtnClicked()
 {
-    currentSignal->MoveUpDown(moveValue);
+    currentSignal->MoveUpDown(moveValue * -1);
 }
 
 void UTrainHUD::DownBtnClicked()
 {
-    currentSignal->MoveUpDown(moveValue*-1);
+    currentSignal->MoveUpDown(moveValue);
 }
 
 void UTrainHUD::ForBtnClicked()
 {
-    currentSignal->MoveForBack(moveValue);
+    currentSignal->MoveForBack(moveValue * -1);
 }
 
 void UTrainHUD::BackBtnClicked()
 {
-    currentSignal->MoveForBack(moveValue*-1);
+    currentSignal->MoveForBack(moveValue);
 }
 
 

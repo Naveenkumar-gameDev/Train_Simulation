@@ -69,6 +69,14 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UButton* backBTN;
 
+    UPROPERTY(meta = (BindWidget))
+    USpinBox* heightValueSpin;
+
+    UPROPERTY(meta = (BindWidget))
+    USpinBox* forBackValueSpin;
+
+    UPROPERTY(meta = (BindWidget))
+    USpinBox* offSetValueSpin;
 
     UFUNCTION()
     void LeftBtnClicked();

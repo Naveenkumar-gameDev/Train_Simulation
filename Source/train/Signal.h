@@ -22,6 +22,15 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Base;
 
+	UPROPERTY(EditAnywhere)
+	float heightValue;
+
+	UPROPERTY(EditAnywhere)
+	float forbackValue;
+
+	UPROPERTY(EditAnywhere)
+	float OffSetValue;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

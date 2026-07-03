@@ -29,18 +29,24 @@ void ASignal::MoveLeftRight(float value)
 {
 	FVector newPos = FVector(GetActorLocation().X + value, GetActorLocation().Y, GetActorLocation().Z);
 	SetActorLocation(newPos);
+
+	OffSetValue += value;
 }
 
 void ASignal::MoveUpDown(float value)
 {
 	FVector newPos = FVector(GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z + value);
 	SetActorLocation(newPos);
+
+	heightValue += value;
 }
 
 void ASignal::MoveForBack(float value)
 {
 	FVector newPos = FVector(GetActorLocation().X , GetActorLocation().Y + value, GetActorLocation().Z);
 	SetActorLocation(newPos);
+
+	forbackValue += value;
 }
 
 
