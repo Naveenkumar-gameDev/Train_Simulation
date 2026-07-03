@@ -57,11 +57,11 @@ bool UTrainHUD::Initialize()
     if (heightSpinBox)
     {
         heightSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnHeightSpinBoxChanged);
-        heightSpinBox->SetMinValue(0);
-        heightSpinBox->SetMaxValue(maxMoveValue);
+        heightSpinBox->SetMinValue(minStepValue);
+        heightSpinBox->SetMaxValue(maxStepValue);
 
-        heightSpinBox->SetMinSliderValue(0);
-        heightSpinBox->SetMaxSliderValue(maxMoveValue);
+        heightSpinBox->SetMinSliderValue(minStepValue);
+        heightSpinBox->SetMaxSliderValue(maxStepValue);
 
         //heightSpinBox->SetMinFractionalDigits(0);
         //heightSpinBox->SetMaxFractionalDigits(0);
@@ -73,11 +73,11 @@ bool UTrainHUD::Initialize()
     if (forBackSpinBox)
     {
         forBackSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnForBackSpinBoxChanged);
-        forBackSpinBox->SetMinValue(0);
-        forBackSpinBox->SetMaxValue(maxMoveValue);
+        forBackSpinBox->SetMinValue(minStepValue);
+        forBackSpinBox->SetMaxValue(maxStepValue);
 
-        forBackSpinBox->SetMinSliderValue(0);
-        forBackSpinBox->SetMaxSliderValue(maxMoveValue);
+        forBackSpinBox->SetMinSliderValue(minStepValue);
+        forBackSpinBox->SetMaxSliderValue(maxStepValue);
 
         //heightSpinBox->SetMinFractionalDigits(0);
         //heightSpinBox->SetMaxFractionalDigits(0);
@@ -89,11 +89,11 @@ bool UTrainHUD::Initialize()
     if (offSetSpinBox)
     {
         offSetSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnOffSetSpinBoxChanged);
-        offSetSpinBox->SetMinValue(0);
-        offSetSpinBox->SetMaxValue(maxMoveValue);
+        offSetSpinBox->SetMinValue(minStepValue);
+        offSetSpinBox->SetMaxValue(maxStepValue);
 
-        offSetSpinBox->SetMinSliderValue(0);
-        offSetSpinBox->SetMaxSliderValue(maxMoveValue);
+        offSetSpinBox->SetMinSliderValue(minStepValue);
+        offSetSpinBox->SetMaxSliderValue(maxStepValue);
 
         //heightSpinBox->SetMinFractionalDigits(0);
         //heightSpinBox->SetMaxFractionalDigits(0);
@@ -159,43 +159,56 @@ void UTrainHUD::OnSpeedSpinBoxChanged(float Value)
 
 void UTrainHUD::LeftBtnClicked()
 {
-    if(currentSignal)
-        currentSignal->MoveLeftRight(moveValue * -1);
+    if (!currentSignal || !offSetSpinBox) return;
+    currentSignal->MoveLeftRight((stepValue*100) * -1);
+
+    offSetSpinBox->SetValue(currentSignal->OffSetValue / 100);
 }
 
 void UTrainHUD::RightBtnClicked()
 {
-    if (currentSignal)
-        currentSignal->MoveLeftRight(moveValue);
+    if (!currentSignal || !offSetSpinBox) return;
+    currentSignal->MoveLeftRight((stepValue * 100));
+
+    offSetSpinBox->SetValue(currentSignal->OffSetValue / 100);
 }
 
 void UTrainHUD::UpBtnClicked()
 {
-    if (currentSignal)
-        currentSignal->MoveUpDown(moveValue * -1);
+    if (!currentSignal || !heightSpinBox) return;
+    currentSignal->MoveUpDown((stepValue * 100) * -1);
+
+    heightSpinBox->SetValue(currentSignal->heightValue / 100);
 }
 
 void UTrainHUD::DownBtnClicked()
 {
-    if (currentSignal)
-        currentSignal->MoveUpDown(moveValue);
+    if (!currentSignal || !heightSpinBox) return;
+        currentSignal->MoveUpDown((stepValue * 100));
+
+        heightSpinBox->SetValue(currentSignal->heightValue / 100);
 }
 
 void UTrainHUD::ForBtnClicked()
 {
-    if (currentSignal)
-        currentSignal->MoveForBack(moveValue * -1);
+    if (!currentSignal || !forBackSpinBox) return;
+    currentSignal->MoveForBack((stepValue * 100) * -1);
+
+    forBackSpinBox->SetValue(currentSignal->forbackValue / 100);
 }
 
 void UTrainHUD::BackBtnClicked()
 {
-    if (currentSignal)
-        currentSignal->MoveForBack(moveValue);
+    if (!currentSignal || !forBackSpinBox) return;
+    currentSignal->MoveForBack((stepValue * 100));
+
+    forBackSpinBox->SetValue(currentSignal->forbackValue / 100);
 }
 
 void UTrainHUD::OnHeightSpinBoxChanged(float value)
 {
-    value = FMath::Clamp(value, 0.0f, maxMoveValue);
+    value = FMath::Clamp(value, minStepValue, maxStepValue);
+    value *= 100;
     if (heightSpinBox && currentSignal)
     {
         FVector newPos = FVector(currentSignal->startPos.X, currentSignal->startPos.Y, currentSignal->startPos.Z + value);
@@ -206,7 +219,8 @@ void UTrainHUD::OnHeightSpinBoxChanged(float value)
 
 void UTrainHUD::OnForBackSpinBoxChanged(float value)
 {
-    value = FMath::Clamp(value, 0.0f, maxMoveValue);
+    value = FMath::Clamp(value, minStepValue, maxStepValue);
+    value *= 100;
     if (forBackSpinBox && currentSignal)
     {
         FVector newPos = FVector(currentSignal->startPos.X, currentSignal->startPos.Y + value, currentSignal->startPos.Z );
@@ -217,7 +231,8 @@ void UTrainHUD::OnForBackSpinBoxChanged(float value)
 
 void UTrainHUD::OnOffSetSpinBoxChanged(float value)
 {
-    value = FMath::Clamp(value, 0.0f, maxMoveValue);
+    value = FMath::Clamp(value, minStepValue, maxStepValue);
+    value *= 100;
     if (offSetSpinBox && currentSignal)
     {
         FVector newPos = FVector(currentSignal->startPos.X + value , currentSignal->startPos.Y , currentSignal->startPos.Z);

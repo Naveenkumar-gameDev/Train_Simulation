@@ -49,10 +49,13 @@ private:
 protected:
 
     UPROPERTY(EditAnywhere)
-    float moveValue;
+    float stepValue;
 
     UPROPERTY(EditAnywhere)
-    float maxMoveValue;
+    float minStepValue;
+
+    UPROPERTY(EditAnywhere)
+    float maxStepValue;
 
     UPROPERTY(meta=(BindWidget))
     UButton* leftBTN;
