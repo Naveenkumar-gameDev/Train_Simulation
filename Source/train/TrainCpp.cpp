@@ -24,6 +24,29 @@ void ATrainCpp::BeginPlay()
 		TrainHUD->AddToViewport();
 		TrainHUD->Train = this;
 	}
+
+	GetWorld()->GetTimerManager().SetTimer(
+		DelayHandle,
+		this,
+		&ATrainCpp::DelayFinished,
+		0.2f,
+		false
+	);
+}
+
+void ATrainCpp::DelayFinished()
+{
+	AActor* Track_BP= UGameplayStatics::GetActorOfClass(
+		GetWorld(),
+		TrackClass);
+
+	Track = Track_BP->FindComponentByClass<USplineComponent>();
+	
+
+	ASignal* Signal = Cast<ASignal>(
+		UGameplayStatics::GetActorOfClass(GetWorld(), ASignal::StaticClass()));
+
+	TrainHUD->currentSignal = Signal;
 }
 
 // Called every frame

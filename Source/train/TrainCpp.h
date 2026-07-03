@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/SplineComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "TrainCpp.generated.h"
 class UTrainHUD;
 class ASignal;
@@ -22,6 +23,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	FTimerHandle DelayHandle;
+
+	UFUNCTION()
+	void DelayFinished();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -37,6 +43,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "VALUE")
 	UTrainHUD* TrainHUD;
+
+	UPROPERTY(EditAnywhere, Category = "VALUE")
+	TSubclassOf<AActor> TrackClass;
 
 #pragma region SpeedControl
 
