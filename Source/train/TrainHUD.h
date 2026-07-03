@@ -51,6 +51,9 @@ protected:
     UPROPERTY(EditAnywhere)
     float moveValue;
 
+    UPROPERTY(EditAnywhere)
+    float maxMoveValue;
+
     UPROPERTY(meta=(BindWidget))
     UButton* leftBTN;
 
@@ -92,13 +95,13 @@ protected:
     void BackBtnClicked();
 
     UFUNCTION()
-    void OnHeightSpinBoxChanged();
-
-    /*UFUNCTION()
-    void OnForBackSpinBoxChanged();
+    void OnHeightSpinBoxChanged(float value);
 
     UFUNCTION()
-    void OnOffSetSpinBoxChanged();*/
+    void OnForBackSpinBoxChanged(float value);
+
+    UFUNCTION()
+    void OnOffSetSpinBoxChanged(float value);
 
 public:
     UPROPERTY(BlueprintReadWrite)

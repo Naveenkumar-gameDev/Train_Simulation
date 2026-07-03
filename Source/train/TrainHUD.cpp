@@ -7,6 +7,8 @@ bool UTrainHUD::Initialize()
     if (!Success)
         return false;
 
+#pragma region SpeedControl
+
     if (speedSlider)
     {
         speedSlider->OnValueChanged.AddDynamic(
@@ -35,6 +37,9 @@ bool UTrainHUD::Initialize()
 
         speedSpinBox->SetValue(0);
     }
+#pragma endregion
+
+#pragma region SignalCotrol
 
     if (leftBTN)
         leftBTN->OnClicked.AddDynamic(this, &UTrainHUD::LeftBtnClicked);
@@ -48,6 +53,58 @@ bool UTrainHUD::Initialize()
         forBTN->OnClicked.AddDynamic(this, &UTrainHUD::ForBtnClicked);
     if (backBTN)
         backBTN->OnClicked.AddDynamic(this, &UTrainHUD::BackBtnClicked);
+
+    if (heightSpinBox)
+    {
+        heightSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnHeightSpinBoxChanged);
+        heightSpinBox->SetMinValue(0);
+        heightSpinBox->SetMaxValue(maxMoveValue);
+
+        heightSpinBox->SetMinSliderValue(0);
+        heightSpinBox->SetMaxSliderValue(maxMoveValue);
+
+        //heightSpinBox->SetMinFractionalDigits(0);
+        //heightSpinBox->SetMaxFractionalDigits(0);
+
+        heightSpinBox->SetDelta(1);
+
+        heightSpinBox->SetValue(0);
+    }
+    if (forBackSpinBox)
+    {
+        forBackSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnForBackSpinBoxChanged);
+        forBackSpinBox->SetMinValue(0);
+        forBackSpinBox->SetMaxValue(maxMoveValue);
+
+        forBackSpinBox->SetMinSliderValue(0);
+        forBackSpinBox->SetMaxSliderValue(maxMoveValue);
+
+        //heightSpinBox->SetMinFractionalDigits(0);
+        //heightSpinBox->SetMaxFractionalDigits(0);
+
+        forBackSpinBox->SetDelta(1);
+
+        forBackSpinBox->SetValue(0);
+    }
+    if (offSetSpinBox)
+    {
+        offSetSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnOffSetSpinBoxChanged);
+        offSetSpinBox->SetMinValue(0);
+        offSetSpinBox->SetMaxValue(maxMoveValue);
+
+        offSetSpinBox->SetMinSliderValue(0);
+        offSetSpinBox->SetMaxSliderValue(maxMoveValue);
+
+        //heightSpinBox->SetMinFractionalDigits(0);
+        //heightSpinBox->SetMaxFractionalDigits(0);
+
+        offSetSpinBox->SetDelta(1);
+
+        offSetSpinBox->SetValue(0);
+    }
+
+
+#pragma endregion
 
     return true;
 }
@@ -130,13 +187,36 @@ void UTrainHUD::BackBtnClicked()
     currentSignal->MoveForBack(moveValue);
 }
 
-void UTrainHUD::OnHeightSpinBoxChanged()
+void UTrainHUD::OnHeightSpinBoxChanged(float value)
 {
-    /*if (heightSpinBox)
+    value = FMath::Clamp(value, 0.0f, maxMoveValue);
+    if (heightSpinBox)
     {
-        FVector 
-        currentSignal->SetActorLocation()
-    }*/
+        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->GetActorLocation().Y, currentSignal->GetActorLocation().Z + (value-currentSignal->heightValue));
+        currentSignal->SetActorLocation(newPos);
+    }
 }
+
+void UTrainHUD::OnForBackSpinBoxChanged(float value)
+{
+    value = FMath::Clamp(value, 0.0f, maxMoveValue);
+    if (forBackSpinBox)
+    {
+        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->GetActorLocation().Y + (value - currentSignal->heightValue), currentSignal->GetActorLocation().Z );
+        currentSignal->SetActorLocation(newPos);
+    }
+}
+
+void UTrainHUD::OnOffSetSpinBoxChanged(float value)
+{
+    value = FMath::Clamp(value, 0.0f, maxMoveValue);
+    if (offSetSpinBox)
+    {
+        FVector newPos = FVector(currentSignal->GetActorLocation().X + (value - currentSignal->heightValue), currentSignal->GetActorLocation().Y , currentSignal->GetActorLocation().Z);
+        currentSignal->SetActorLocation(newPos);
+    }
+}
+
+
 
 #pragma endregion

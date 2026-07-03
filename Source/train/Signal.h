@@ -22,6 +22,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Base;
 
+public:
+
 	UPROPERTY(EditAnywhere)
 	float heightValue;
 
