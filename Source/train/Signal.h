@@ -19,6 +19,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* SceneRoot;
+
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Base;
 
@@ -34,6 +37,14 @@ public:
 	float OffSetValue;
 
 	FVector startPos;
+
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* greenMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* redMesh;
 
 public:	
 	// Called every frame

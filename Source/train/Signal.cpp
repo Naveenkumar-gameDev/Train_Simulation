@@ -9,6 +9,15 @@ ASignal::ASignal()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// Create DefaultSceneRoot
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));
+	RootComponent = SceneRoot;
+
+	greenMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GreenMesh"));
+	greenMesh->SetupAttachment(SceneRoot);
+
+	redMesh= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RedMesh"));
+	redMesh->SetupAttachment(SceneRoot);
 }
 
 // Called when the game starts or when spawned

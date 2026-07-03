@@ -53,7 +53,7 @@ public:
 #pragma endregion
 
 public:
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite) 
 	TArray<ASignal*> allSignals;
 
 

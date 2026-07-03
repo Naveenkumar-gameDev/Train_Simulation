@@ -54,6 +54,13 @@ bool UTrainHUD::Initialize()
     if (backBTN)
         backBTN->OnClicked.AddDynamic(this, &UTrainHUD::BackBtnClicked);
 
+    if (offBTN)
+        offBTN->OnClicked.AddDynamic(this, &UTrainHUD::OnOffBtnClicked);
+    if (redBTN)
+        redBTN->OnClicked.AddDynamic(this, &UTrainHUD::OnRedBtnClicked);
+    if (greenBTN)
+        greenBTN->OnClicked.AddDynamic(this, &UTrainHUD::OnGreenBtnClicked);
+
     if (heightSpinBox)
     {
         heightSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnHeightSpinBoxChanged);
@@ -211,7 +218,7 @@ void UTrainHUD::OnHeightSpinBoxChanged(float value)
     value *= 100;
     if (heightSpinBox && currentSignal)
     {
-        FVector newPos = FVector(currentSignal->startPos.X, currentSignal->startPos.Y, currentSignal->startPos.Z + value);
+        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->GetActorLocation().Y, currentSignal->startPos.Z + value);
         currentSignal->SetActorLocation(newPos);
         currentSignal->heightValue = value;
     }
@@ -223,7 +230,7 @@ void UTrainHUD::OnForBackSpinBoxChanged(float value)
     value *= 100;
     if (forBackSpinBox && currentSignal)
     {
-        FVector newPos = FVector(currentSignal->startPos.X, currentSignal->startPos.Y + value, currentSignal->startPos.Z );
+        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->startPos.Y + value, currentSignal->GetActorLocation().Z );
         currentSignal->SetActorLocation(newPos);
         currentSignal->forbackValue = value;
     }
@@ -235,11 +242,37 @@ void UTrainHUD::OnOffSetSpinBoxChanged(float value)
     value *= 100;
     if (offSetSpinBox && currentSignal)
     {
-        FVector newPos = FVector(currentSignal->startPos.X + value , currentSignal->startPos.Y , currentSignal->startPos.Z);
+        FVector newPos = FVector(currentSignal->startPos.X + value , currentSignal->GetActorLocation().Y , currentSignal->GetActorLocation().Z);
         currentSignal->SetActorLocation(newPos);
         currentSignal->OffSetValue = value;
     }
 }
+
+void UTrainHUD::OnOffBtnClicked()
+{
+    if (!currentSignal) return;
+
+    currentSignal->redMesh->SetVisibility(false);
+    currentSignal->greenMesh->SetVisibility(false);
+}
+
+void UTrainHUD::OnRedBtnClicked()
+{
+    if (!currentSignal) return;
+
+    currentSignal->redMesh->SetVisibility(true);
+    currentSignal->greenMesh->SetVisibility(false);
+}
+
+void UTrainHUD::OnGreenBtnClicked()
+{
+    if (!currentSignal) return;
+
+    currentSignal->redMesh->SetVisibility(false);
+    currentSignal->greenMesh->SetVisibility(true);
+}
+
+
 
 
 

@@ -84,6 +84,15 @@ protected:
     UPROPERTY(meta = (BindWidget))
     USpinBox* offSetSpinBox;
 
+    UPROPERTY(meta=(BindWidget))
+    UButton* offBTN;
+
+    UPROPERTY(meta = (BindWidget))
+    UButton* redBTN;
+
+    UPROPERTY(meta = (BindWidget))
+    UButton* greenBTN;
+
     UFUNCTION()
     void LeftBtnClicked();
     UFUNCTION()
@@ -105,6 +114,15 @@ protected:
 
     UFUNCTION()
     void OnOffSetSpinBoxChanged(float value);
+
+    UFUNCTION()
+    void OnOffBtnClicked();
+
+    UFUNCTION()
+    void OnRedBtnClicked();
+
+    UFUNCTION()
+    void OnGreenBtnClicked();
 
 public:
     UPROPERTY(BlueprintReadWrite)
