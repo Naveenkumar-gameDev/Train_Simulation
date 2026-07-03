@@ -20,7 +20,7 @@ bool UTrainHUD::Initialize()
     {
         speedSpinBox->OnValueChanged.AddDynamic(
             this,
-            &UTrainHUD::OnSpinBoxChanged);
+            &UTrainHUD::OnSpeedSpinBoxChanged);
 
         speedSpinBox->SetMinValue(0);
         speedSpinBox->SetMaxValue(maxTrainSpeed);
@@ -74,7 +74,7 @@ void UTrainHUD::OnSliderChanged(float Value)
     bUpdatingUI = false;
 }
 
-void UTrainHUD::OnSpinBoxChanged(float Value)
+void UTrainHUD::OnSpeedSpinBoxChanged(float Value)
 {
     if (bUpdatingUI)
         return;
@@ -130,6 +130,13 @@ void UTrainHUD::BackBtnClicked()
     currentSignal->MoveForBack(moveValue);
 }
 
-
+void UTrainHUD::OnHeightSpinBoxChanged()
+{
+    /*if (heightSpinBox)
+    {
+        FVector 
+        currentSignal->SetActorLocation()
+    }*/
+}
 
 #pragma endregion

@@ -29,7 +29,7 @@ protected:
     void OnSliderChanged(float Value);
 
     UFUNCTION()
-    void OnSpinBoxChanged(float Value);
+    void OnSpeedSpinBoxChanged(float Value);
 
 public:
 
@@ -70,13 +70,13 @@ protected:
     UButton* backBTN;
 
     UPROPERTY(meta = (BindWidget))
-    USpinBox* heightValueSpin;
+    USpinBox* heightSpinBox;
 
     UPROPERTY(meta = (BindWidget))
-    USpinBox* forBackValueSpin;
+    USpinBox* forBackSpinBox;
 
     UPROPERTY(meta = (BindWidget))
-    USpinBox* offSetValueSpin;
+    USpinBox* offSetSpinBox;
 
     UFUNCTION()
     void LeftBtnClicked();
@@ -90,6 +90,15 @@ protected:
     void ForBtnClicked();
     UFUNCTION()
     void BackBtnClicked();
+
+    UFUNCTION()
+    void OnHeightSpinBoxChanged();
+
+    /*UFUNCTION()
+    void OnForBackSpinBoxChanged();
+
+    UFUNCTION()
+    void OnOffSetSpinBoxChanged();*/
 
 public:
     UPROPERTY(BlueprintReadWrite)
