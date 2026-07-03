@@ -159,61 +159,70 @@ void UTrainHUD::OnSpeedSpinBoxChanged(float Value)
 
 void UTrainHUD::LeftBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue * -1);
+    if(currentSignal)
+        currentSignal->MoveLeftRight(moveValue * -1);
 }
 
 void UTrainHUD::RightBtnClicked()
 {
-    currentSignal->MoveLeftRight(moveValue);
+    if (currentSignal)
+        currentSignal->MoveLeftRight(moveValue);
 }
 
 void UTrainHUD::UpBtnClicked()
 {
-    currentSignal->MoveUpDown(moveValue * -1);
+    if (currentSignal)
+        currentSignal->MoveUpDown(moveValue * -1);
 }
 
 void UTrainHUD::DownBtnClicked()
 {
-    currentSignal->MoveUpDown(moveValue);
+    if (currentSignal)
+        currentSignal->MoveUpDown(moveValue);
 }
 
 void UTrainHUD::ForBtnClicked()
 {
-    currentSignal->MoveForBack(moveValue * -1);
+    if (currentSignal)
+        currentSignal->MoveForBack(moveValue * -1);
 }
 
 void UTrainHUD::BackBtnClicked()
 {
-    currentSignal->MoveForBack(moveValue);
+    if (currentSignal)
+        currentSignal->MoveForBack(moveValue);
 }
 
 void UTrainHUD::OnHeightSpinBoxChanged(float value)
 {
     value = FMath::Clamp(value, 0.0f, maxMoveValue);
-    if (heightSpinBox)
+    if (heightSpinBox && currentSignal)
     {
-        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->GetActorLocation().Y, currentSignal->GetActorLocation().Z + (value-currentSignal->heightValue));
+        FVector newPos = FVector(currentSignal->startPos.X, currentSignal->startPos.Y, currentSignal->startPos.Z + value);
         currentSignal->SetActorLocation(newPos);
+        currentSignal->heightValue = value;
     }
 }
 
 void UTrainHUD::OnForBackSpinBoxChanged(float value)
 {
     value = FMath::Clamp(value, 0.0f, maxMoveValue);
-    if (forBackSpinBox)
+    if (forBackSpinBox && currentSignal)
     {
-        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->GetActorLocation().Y + (value - currentSignal->heightValue), currentSignal->GetActorLocation().Z );
+        FVector newPos = FVector(currentSignal->startPos.X, currentSignal->startPos.Y + value, currentSignal->startPos.Z );
         currentSignal->SetActorLocation(newPos);
+        currentSignal->forbackValue = value;
     }
 }
 
 void UTrainHUD::OnOffSetSpinBoxChanged(float value)
 {
     value = FMath::Clamp(value, 0.0f, maxMoveValue);
-    if (offSetSpinBox)
+    if (offSetSpinBox && currentSignal)
     {
-        FVector newPos = FVector(currentSignal->GetActorLocation().X + (value - currentSignal->heightValue), currentSignal->GetActorLocation().Y , currentSignal->GetActorLocation().Z);
+        FVector newPos = FVector(currentSignal->startPos.X + value , currentSignal->startPos.Y , currentSignal->startPos.Z);
         currentSignal->SetActorLocation(newPos);
+        currentSignal->OffSetValue = value;
     }
 }
 

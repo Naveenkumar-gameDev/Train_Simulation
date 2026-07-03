@@ -33,6 +33,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	float OffSetValue;
 
+	FVector startPos;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

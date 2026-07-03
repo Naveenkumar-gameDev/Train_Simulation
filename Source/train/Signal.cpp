@@ -16,6 +16,7 @@ void ASignal::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	startPos = GetActorLocation();
 }
 
 // Called every frame
