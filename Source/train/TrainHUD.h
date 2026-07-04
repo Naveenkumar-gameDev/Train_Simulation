@@ -7,6 +7,7 @@
 #include "Components/Button.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "Components/ComboBoxString.h"
 #include "TrainCpp.h"
 #include "Signal.h"
 #include "TrainHUD.generated.h"
@@ -112,6 +113,9 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UButton* resetParaBTN;
 
+    UPROPERTY(meta = (BindWidget))
+    UComboBoxString* signalComboBox;
+
     UFUNCTION()
     void LeftBtnClicked();
     UFUNCTION()
@@ -145,6 +149,9 @@ protected:
 
     UFUNCTION()
     void OnRestParaBtnClicked();
+
+    UFUNCTION()
+    void OnSignalSelected(FString SelectedItem, ESelectInfo::Type SelectedType);
 
 public:
     UPROPERTY(BlueprintReadWrite)

@@ -63,6 +63,9 @@ bool UTrainHUD::Initialize()
 
     if (resetParaBTN)
         resetParaBTN->OnClicked.AddDynamic(this, &UTrainHUD::OnRestParaBtnClicked);
+
+    if (signalComboBox)
+        signalComboBox->OnSelectionChanged.AddDynamic(this, &UTrainHUD::OnSignalSelected);
         
 
     if (heightSpinBox)
@@ -314,6 +317,18 @@ void UTrainHUD::OnRestParaBtnClicked()
     OnHeightSpinBoxChanged(0);
     OnForBackSpinBoxChanged(0);
 
+}
+
+void UTrainHUD::OnSignalSelected(FString SelectedItem, ESelectInfo::Type SelectedType)
+{
+    for (ASignal* signal : Train->SignalArray)
+    {
+        if (signal->ID == SelectedItem)
+        {
+            currentSignal = signal;
+            break;
+        }
+    }
 }
 
 #pragma endregion

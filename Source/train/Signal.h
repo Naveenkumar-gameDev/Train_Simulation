@@ -36,6 +36,9 @@ public:
 
 	FVector startPos;
 
+	UPROPERTY(EditAnywhere)
+	FString ID;
+
 
 
 public:	

@@ -58,12 +58,38 @@ void ATrainCpp::DelayFinished()
 	}
 	
 
-	ASignal* Signal = Cast<ASignal>(
-		UGameplayStatics::GetActorOfClass(GetWorld(), ASignal::StaticClass()));
+
+	TArray<AActor*> FoundActors;
+
+	UGameplayStatics::GetAllActorsOfClass(
+		GetWorld(),
+		ASignal::StaticClass(),
+		FoundActors
+	);
+
+	// Clear previous references
+	SignalArray.Empty();
+
+	// Convert AActor* to ASignal*
+	for (AActor* Actor : FoundActors)
+	{
+		if (ASignal* Signal = Cast<ASignal>(Actor))
+		{
+			SignalArray.Add(Signal);
+		}
+	}
+
+
+	/*ASignal* Signal = Cast<ASignal>(
+		UGameplayStatics::GetActorOfClass(GetWorld(), ASignal::StaticClass()));*/
 
 	if (TrainHUD)
 	{
-		TrainHUD->currentSignal = Signal;
+		for (ASignal* Signal : SignalArray)
+		{
+			if(Signal->ID==TEXT("SS141"))
+				TrainHUD->currentSignal = Signal;
+		}
 	}
 }
 

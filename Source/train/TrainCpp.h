@@ -63,7 +63,7 @@ public:
 
 public:
 	UPROPERTY(BlueprintReadWrite) 
-	TArray<ASignal*> allSignals;
+	TArray<ASignal*> SignalArray;
 
 
 
