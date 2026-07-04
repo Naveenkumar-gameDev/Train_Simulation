@@ -100,6 +100,9 @@ protected:
     UPROPERTY(meta=(BindWidget))
     UImage* greenLightImage;
 
+    UPROPERTY(meta = (BindWidget))
+    UImage* lightSelectedImage;
+
     UFUNCTION()
     void LeftBtnClicked();
     UFUNCTION()

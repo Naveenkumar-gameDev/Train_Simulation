@@ -256,6 +256,9 @@ void UTrainHUD::OnOffBtnClicked()
 
     redLightImage->SetVisibility(ESlateVisibility::Hidden);
     greenLightImage->SetVisibility(ESlateVisibility::Hidden);
+
+    lightSelectedImage->SetRenderTranslation(FVector2D(0, 0));
+    lightSelectedImage->SetColorAndOpacity(FLinearColor(0.014f, 0.533f, 0.651f, 1.0f));
 }
 
 void UTrainHUD::OnRedBtnClicked()
@@ -267,6 +270,9 @@ void UTrainHUD::OnRedBtnClicked()
 
     redLightImage->SetVisibility(ESlateVisibility::Visible);
     greenLightImage->SetVisibility(ESlateVisibility::Hidden);
+
+    lightSelectedImage->SetRenderTranslation(FVector2D(58.5f, 0));
+    lightSelectedImage->SetColorAndOpacity(FLinearColor::Red);
 }
 
 void UTrainHUD::OnGreenBtnClicked()
@@ -278,6 +284,9 @@ void UTrainHUD::OnGreenBtnClicked()
 
     redLightImage->SetVisibility(ESlateVisibility::Hidden);
     greenLightImage->SetVisibility(ESlateVisibility::Visible);
+
+    lightSelectedImage->SetRenderTranslation(FVector2D(117, 0));
+    lightSelectedImage->SetColorAndOpacity(FLinearColor::Green);
 }
 
 
