@@ -61,6 +61,10 @@ bool UTrainHUD::Initialize()
     if (greenBTN)
         greenBTN->OnClicked.AddDynamic(this, &UTrainHUD::OnGreenBtnClicked);
 
+    if (resetParaBTN)
+        resetParaBTN->OnClicked.AddDynamic(this, &UTrainHUD::OnRestParaBtnClicked);
+        
+
     if (heightSpinBox)
     {
         heightSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnHeightSpinBoxChanged);
@@ -287,6 +291,22 @@ void UTrainHUD::OnGreenBtnClicked()
 
     lightSelectedImage->SetRenderTranslation(FVector2D(117, 0));
     //lightSelectedImage->SetColorAndOpacity(FLinearColor::Green);
+}
+
+void UTrainHUD::OnRestParaBtnClicked()
+{
+    if (!currentSignal) return;
+
+    OnOffBtnClicked();
+
+    offSetSpinBox->SetValue(0);
+    heightSpinBox->SetValue(0);
+    forBackSpinBox->SetValue(0);
+
+    OnOffSetSpinBoxChanged(0);
+    OnHeightSpinBoxChanged(0);
+    OnForBackSpinBoxChanged(0);
+
 }
 
 

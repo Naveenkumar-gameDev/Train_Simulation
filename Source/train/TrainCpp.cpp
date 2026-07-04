@@ -16,6 +16,18 @@ ATrainCpp::ATrainCpp()
 void ATrainCpp::BeginPlay()
 {
 	Super::BeginPlay();
+
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+
+	if (PC)
+	{
+		FInputModeGameAndUI InputMode;
+		InputMode.SetHideCursorDuringCapture(false);
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+		PC->SetInputMode(InputMode);
+		PC->bShowMouseCursor = true;
+	}
 	
 	TrainHUD = CreateWidget<UTrainHUD>(GetWorld(), TrainHUDClass);
 
@@ -43,10 +55,6 @@ void ATrainCpp::DelayFinished()
 	if (Track_BP)
 	{
 		Track = Track_BP->FindComponentByClass<USplineComponent>();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Track_BP is nullptr"));
 	}
 	
 
@@ -77,7 +85,7 @@ void ATrainCpp::Tick(float DeltaTime)
 		currentLocation,
 		ESplineCoordinateSpace::World);
 
-	FRotator Rotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, DeltaTime, 0.5f);
+	FRotator Rotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, DeltaTime, 5);
 
 	SetActorLocation(Location);
 	SetActorRotation(Rotation);

@@ -103,6 +103,9 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UImage* lightSelectedImage;
 
+    UPROPERTY(meta = (BindWidget))
+    UButton* resetParaBTN;
+
     UFUNCTION()
     void LeftBtnClicked();
     UFUNCTION()
@@ -133,6 +136,9 @@ protected:
 
     UFUNCTION()
     void OnGreenBtnClicked();
+
+    UFUNCTION()
+    void OnRestParaBtnClicked();
 
 public:
     UPROPERTY(BlueprintReadWrite)
