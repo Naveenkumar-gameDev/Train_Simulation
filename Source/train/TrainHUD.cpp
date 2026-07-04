@@ -119,6 +119,13 @@ bool UTrainHUD::Initialize()
 
     return true;
 }
+
+void UTrainHUD::NativeTick(const FGeometry& myGeometry, float InDelta)
+{
+    UpdateSignalDistance();
+
+}
+
 #pragma region SpeedControl
 void UTrainHUD::OnSliderChanged(float Value)
 {
@@ -309,8 +316,20 @@ void UTrainHUD::OnRestParaBtnClicked()
 
 }
 
+#pragma endregion
+
+#pragma region Speed Distance
 
 
+void UTrainHUD::UpdateSignalDistance()
+{
+    if (!currentSignal || !Train) return;
+    FVector A = Train->GetActorLocation();
+    FVector B = currentSignal->GetActorLocation();
 
+    distanceTXT->SetText(FText::AsNumber(FMath::Abs(A.Y-B.Y)/100));
+
+    readingTXT->SetText(FText::AsNumber(0));
+}
 
 #pragma endregion

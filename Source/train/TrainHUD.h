@@ -6,6 +6,7 @@
 #include "Components/SpinBox.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 #include "TrainCpp.h"
 #include "Signal.h"
 #include "TrainHUD.generated.h"
@@ -15,10 +16,15 @@ class TRAIN_API UTrainHUD : public UUserWidget
 {
     GENERATED_BODY()
 
-#pragma region SpeedControl
 protected:
 
     virtual bool Initialize() override;
+
+    virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+#pragma region Speed Control
+
+protected:
 
     UPROPERTY(meta = (BindWidget))
     USlider* speedSlider;
@@ -143,6 +149,20 @@ protected:
 public:
     UPROPERTY(BlueprintReadWrite)
     ASignal* currentSignal;
+
+#pragma endregion
+
+#pragma region Signal Distance
+
+    UPROPERTY(meta=(BandWidget))
+    UTextBlock* distanceTXT;
+
+    UPROPERTY(meta = (BandWidget))
+    UTextBlock* readingTXT;
+
+    UFUNCTION()
+    void UpdateSignalDistance();
+
 
 #pragma endregion
 };
