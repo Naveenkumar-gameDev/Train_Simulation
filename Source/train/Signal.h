@@ -19,8 +19,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere)
-	USceneComponent* SceneRoot;
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Base;
@@ -40,12 +38,6 @@ public:
 
 
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* greenMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* redMesh;
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -58,4 +50,13 @@ public:
 
 	UFUNCTION()
 	void MoveForBack(float value);
+
+	UFUNCTION(BlueprintNativeEvent, Category = "SignalLight")
+	void SetActiveAllLights(bool value);
+
+	UFUNCTION(BlueprintNativeEvent, Category = "SignalLight")
+	void SetAciveRedLight(bool value);
+
+	UFUNCTION(BlueprintNativeEvent, Category = "SignalLight")
+	void SetAciveGreenLight(bool value);
 };

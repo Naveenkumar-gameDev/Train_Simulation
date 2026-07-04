@@ -252,24 +252,23 @@ void UTrainHUD::OnOffBtnClicked()
 {
     if (!currentSignal) return;
 
-    currentSignal->redMesh->SetVisibility(false);
-    currentSignal->greenMesh->SetVisibility(false);
+    currentSignal->SetActiveAllLights(false);
 }
 
 void UTrainHUD::OnRedBtnClicked()
 {
     if (!currentSignal) return;
 
-    currentSignal->redMesh->SetVisibility(true);
-    currentSignal->greenMesh->SetVisibility(false);
+    currentSignal->SetAciveRedLight(true);
+    currentSignal->SetAciveGreenLight(false);
 }
 
 void UTrainHUD::OnGreenBtnClicked()
 {
     if (!currentSignal) return;
 
-    currentSignal->redMesh->SetVisibility(false);
-    currentSignal->greenMesh->SetVisibility(true);
+    currentSignal->SetAciveRedLight(false);
+    currentSignal->SetAciveGreenLight(true);
 }
 
 

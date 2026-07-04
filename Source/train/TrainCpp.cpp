@@ -36,17 +36,27 @@ void ATrainCpp::BeginPlay()
 
 void ATrainCpp::DelayFinished()
 {
-	AActor* Track_BP= UGameplayStatics::GetActorOfClass(
+	AActor* Track_BP = UGameplayStatics::GetActorOfClass(
 		GetWorld(),
 		TrackClass);
 
-	Track = Track_BP->FindComponentByClass<USplineComponent>();
+	if (Track_BP)
+	{
+		Track = Track_BP->FindComponentByClass<USplineComponent>();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Track_BP is nullptr"));
+	}
 	
 
 	ASignal* Signal = Cast<ASignal>(
 		UGameplayStatics::GetActorOfClass(GetWorld(), ASignal::StaticClass()));
 
-	TrainHUD->currentSignal = Signal;
+	if (TrainHUD)
+	{
+		TrainHUD->currentSignal = Signal;
+	}
 }
 
 // Called every frame
