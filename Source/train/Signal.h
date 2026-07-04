@@ -6,6 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "Signal.generated.h"
 
+UENUM(BlueprintType)
+enum class ESignalAspect : uint8
+{
+	Off UMETA(DisplayName = "Off"),
+	Red UMETA(DisplayName = "Red"),
+	Green UMETA(DisplayName = "Green")
+};
+
 UCLASS()
 class TRAIN_API ASignal : public AActor
 {
@@ -38,6 +46,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	FString ID;
+
+	ESignalAspect currentAspect = ESignalAspect::Off;
 
 
 

@@ -273,6 +273,8 @@ void UTrainHUD::OnOffBtnClicked()
 
     lightSelectedImage->SetRenderTranslation(FVector2D(0, 0));
     //lightSelectedImage->SetColorAndOpacity(FLinearColor(0.014f, 0.533f, 0.651f, 1.0f));
+
+    currentSignal->currentAspect = ESignalAspect::Off;
 }
 
 void UTrainHUD::OnRedBtnClicked()
@@ -287,6 +289,8 @@ void UTrainHUD::OnRedBtnClicked()
 
     lightSelectedImage->SetRenderTranslation(FVector2D(58.5f, 0));
     //lightSelectedImage->SetColorAndOpacity(FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+
+    currentSignal->currentAspect = ESignalAspect::Red;
 }
 
 void UTrainHUD::OnGreenBtnClicked()
@@ -301,6 +305,8 @@ void UTrainHUD::OnGreenBtnClicked()
 
     lightSelectedImage->SetRenderTranslation(FVector2D(117, 0));
     //lightSelectedImage->SetColorAndOpacity(FLinearColor::Green);
+
+    currentSignal->currentAspect = ESignalAspect::Green;
 }
 
 void UTrainHUD::OnRestParaBtnClicked()
@@ -329,6 +335,23 @@ void UTrainHUD::OnSignalSelected(FString SelectedItem, ESelectInfo::Type Selecte
             break;
         }
     }
+
+    offSetSpinBox->SetValue(currentSignal->OffSetValue/100);
+    heightSpinBox->SetValue(currentSignal->heightValue / 100);
+    forBackSpinBox->SetValue(currentSignal->forbackValue / 100);
+
+    switch (currentSignal->currentAspect)
+    {
+    case ESignalAspect::Off:
+        OnOffBtnClicked();
+        break;
+    case ESignalAspect::Red:
+        OnRedBtnClicked();
+        break;
+    case ESignalAspect::Green:
+        OnGreenBtnClicked();
+        break;
+    }
 }
 
 #pragma endregion
@@ -342,9 +365,22 @@ void UTrainHUD::UpdateSignalDistance()
     FVector A = Train->GetActorLocation();
     FVector B = currentSignal->GetActorLocation();
 
-    distanceTXT->SetText(FText::AsNumber(FMath::Abs(A.Y-B.Y)/100));
+    float distance = (A.Y - B.Y) / 100;
 
-    readingTXT->SetText(FText::AsNumber(0));
+    distanceTXT->SetText(FText::AsNumber(FMath::Abs(distance)));
+
+
+    float SpeedMS = Train->speed * 0.447f;
+
+    if (SpeedMS > KINDA_SMALL_NUMBER)
+    {
+        float Time = distance / SpeedMS;
+        readingTXT->SetText(FText::AsNumber(Time));
+    }
+    else
+    {
+        readingTXT->SetText(FText::FromString(TEXT("--")));
+    }
 }
 
 #pragma endregion
