@@ -5,6 +5,7 @@
 #include "Components/Slider.h"
 #include "Components/SpinBox.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
 #include "TrainCpp.h"
 #include "Signal.h"
 #include "TrainHUD.generated.h"
@@ -92,6 +93,12 @@ protected:
 
     UPROPERTY(meta = (BindWidget))
     UButton* greenBTN;
+
+    UPROPERTY(meta = (BindWidget))
+    UImage* redLightImage;
+
+    UPROPERTY(meta=(BindWidget))
+    UImage* greenLightImage;
 
     UFUNCTION()
     void LeftBtnClicked();
