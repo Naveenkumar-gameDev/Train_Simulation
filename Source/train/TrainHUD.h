@@ -120,6 +120,9 @@ protected:
     UPROPERTY(meta= (BindWidget))
     UButton* vegOnOff_BTN;
 
+    UPROPERTY(meta=(BindWidget))
+    UImage* vegBar_Image;
+
     UFUNCTION()
     void LeftBtnClicked();
     UFUNCTION()
