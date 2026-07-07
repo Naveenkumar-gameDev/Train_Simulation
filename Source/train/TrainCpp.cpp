@@ -91,6 +91,11 @@ void ATrainCpp::DelayFinished()
 				TrainHUD->currentSignal = Signal;
 		}
 	}
+	if (TrainHUD)
+	{
+		AActor* vegetaion = Cast<AActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AActor::StaticClass()));
+		TrainHUD->VegHISM=vegetaion->FindComponentByClass<UHierarchicalInstancedStaticMeshComponent>();
+	}
 }
 
 // Called every frame

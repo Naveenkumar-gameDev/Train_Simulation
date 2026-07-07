@@ -47,6 +47,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "VALUE")
 	TSubclassOf<AActor> TrackClass;
 
+	UPROPERTY(EditAnywhere, Category="VALUE")
+	TSubclassOf<AActor> VegetationClass;
+
 #pragma region SpeedControl
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VALUE")

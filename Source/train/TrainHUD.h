@@ -8,6 +8,7 @@
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/ComboBoxString.h"
+#include <Components/HierarchicalInstancedStaticMeshComponent.h>
 #include "TrainCpp.h"
 #include "Signal.h"
 #include "TrainHUD.generated.h"
@@ -116,6 +117,9 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UComboBoxString* signalComboBox;
 
+    UPROPERTY(meta= (BindWidget))
+    UButton* VegOnOff_BTN;
+
     UFUNCTION()
     void LeftBtnClicked();
     UFUNCTION()
@@ -153,9 +157,15 @@ protected:
     UFUNCTION()
     void OnSignalSelected(FString SelectedItem, ESelectInfo::Type SelectedType);
 
+    UFUNCTION()
+    void OnVegOnOFfBtnClicked();
+
 public:
     UPROPERTY(BlueprintReadWrite)
     ASignal* currentSignal;
+
+    UPROPERTY(BlueprintReadOnly)
+    UHierarchicalInstancedStaticMeshComponent* VegHISM;
 
 #pragma endregion
 

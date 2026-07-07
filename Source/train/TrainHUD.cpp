@@ -120,6 +120,13 @@ bool UTrainHUD::Initialize()
 
 #pragma endregion
 
+#pragma region Vegetation
+
+    if (VegOnOff_BTN)
+        VegOnOff_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVegOnOFfBtnClicked);
+
+#pragma endregion
+
     return true;
 }
 
@@ -386,3 +393,8 @@ void UTrainHUD::UpdateSignalDistance()
 }
 
 #pragma endregion
+
+void UTrainHUD::OnVegOnOFfBtnClicked()
+{
+    VegHISM->SetVisibility(false);
+}
