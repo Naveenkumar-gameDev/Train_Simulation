@@ -396,5 +396,8 @@ void UTrainHUD::UpdateSignalDistance()
 
 void UTrainHUD::OnVegOnOFfBtnClicked()
 {
-    VegHISM->SetVisibility(false);
+    if(VegHISM)
+        VegHISM->SetVisibility(false);
+    else
+        UE_LOG(LogTemp, Display, TEXT("VEG REFERENCE NULL"));
 }
