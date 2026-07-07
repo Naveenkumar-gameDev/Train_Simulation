@@ -401,14 +401,14 @@ void UTrainHUD::OnVegOnOFfBtnClicked()
     {
         VegHISM->SetVisibility(false);
         vegOnOff_BTN->SetBackgroundColor(FLinearColor::Black);
-        vegBar_Image->SetRenderTranslation(FVector2D(49.0f, 0.0f));
+        vegBar_Image->SetRenderTranslation(FVector2D(-49.0f, 0.0f));
         isVegOn = false;
     }
     else
     {
         VegHISM->SetVisibility(true);
         vegOnOff_BTN->SetBackgroundColor(FLinearColor(0.0f, 1.0f, 1.0f));
-        vegBar_Image->SetRenderTranslation(FVector2D(0.0f, -49.0f));
+        vegBar_Image->SetRenderTranslation(FVector2D(49.0f, 0.0f));
         isVegOn = true;
     }
 }
