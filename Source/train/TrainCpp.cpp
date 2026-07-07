@@ -93,8 +93,9 @@ void ATrainCpp::DelayFinished()
 	}
 	if (TrainHUD)
 	{
-		AActor* vegetaion = Cast<AActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AActor::StaticClass()));
+		AActor* vegetaion = Cast<AActor>(UGameplayStatics::GetActorOfClass(GetWorld(), VegetationClass));
 		TrainHUD->VegHISM=vegetaion->FindComponentByClass<UHierarchicalInstancedStaticMeshComponent>();
+
 	}
 }
 

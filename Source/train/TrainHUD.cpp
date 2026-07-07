@@ -122,8 +122,8 @@ bool UTrainHUD::Initialize()
 
 #pragma region Vegetation
 
-    if (VegOnOff_BTN)
-        VegOnOff_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVegOnOFfBtnClicked);
+    if (vegOnOff_BTN)
+        vegOnOff_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVegOnOFfBtnClicked);
 
 #pragma endregion
 
@@ -396,8 +396,17 @@ void UTrainHUD::UpdateSignalDistance()
 
 void UTrainHUD::OnVegOnOFfBtnClicked()
 {
-    if(VegHISM)
+    if (!VegHISM) return;
+    if (isVegOn)
+    {
         VegHISM->SetVisibility(false);
+        vegOnOff_BTN->SetBackgroundColor(FLinearColor::Black);
+        isVegOn = false;
+    }
     else
-        UE_LOG(LogTemp, Display, TEXT("VEG REFERENCE NULL"));
+    {
+        VegHISM->SetVisibility(true);
+        vegOnOff_BTN->SetBackgroundColor(FLinearColor(0.0f, 1.0f, 1.0f));
+        isVegOn = true;
+    }
 }

@@ -118,7 +118,7 @@ protected:
     UComboBoxString* signalComboBox;
 
     UPROPERTY(meta= (BindWidget))
-    UButton* VegOnOff_BTN;
+    UButton* vegOnOff_BTN;
 
     UFUNCTION()
     void LeftBtnClicked();
@@ -164,8 +164,10 @@ public:
     UPROPERTY(BlueprintReadWrite)
     ASignal* currentSignal;
 
-    UPROPERTY(BlueprintReadOnly)
     UHierarchicalInstancedStaticMeshComponent* VegHISM;
+
+    UPROPERTY(BlueprintReadOnly)
+    bool isVegOn = true;
 
 #pragma endregion
 
