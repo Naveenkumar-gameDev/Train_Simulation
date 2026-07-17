@@ -288,8 +288,8 @@ void UTrainHUD::OnRedBtnClicked()
 {
     if (!currentSignal) return;
 
+    //currentSignal->SetAciveGreenLight(false);
     currentSignal->SetAciveRedLight(true);
-    currentSignal->SetAciveGreenLight(false);
 
     redLightImage->SetVisibility(ESlateVisibility::Visible);
     greenLightImage->SetVisibility(ESlateVisibility::Hidden);
@@ -304,7 +304,7 @@ void UTrainHUD::OnGreenBtnClicked()
 {
     if (!currentSignal) return;
 
-    currentSignal->SetAciveRedLight(false);
+    //currentSignal->SetAciveRedLight(false);
     currentSignal->SetAciveGreenLight(true);
 
     redLightImage->SetVisibility(ESlateVisibility::Hidden);
