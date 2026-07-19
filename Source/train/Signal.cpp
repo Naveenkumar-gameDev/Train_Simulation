@@ -32,6 +32,7 @@ void ASignal::MoveLeftRight(float value)
 	SetActorLocation(newPos);
 
 	OffSetValue += value;
+	UE_LOG(LogTemp, Display, TEXT("%f"),(diff->GetActorLocation().X - GetActorLocation().X)/100);
 }
 
 void ASignal::MoveUpDown(float value)
@@ -40,6 +41,8 @@ void ASignal::MoveUpDown(float value)
 	SetActorLocation(newPos);
 
 	heightValue += value;
+	UE_LOG(LogTemp, Display, TEXT("%f"), (diff->GetActorLocation().Z - lightMeshRef->GetComponentLocation().Z) / 100);
+
 }
 
 void ASignal::MoveForBack(float value)

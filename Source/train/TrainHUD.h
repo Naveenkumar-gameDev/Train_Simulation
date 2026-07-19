@@ -61,10 +61,22 @@ protected:
     float stepValue;
 
     UPROPERTY(EditAnywhere)
-    float minStepValue;
+    float minHeightStepValue;
 
     UPROPERTY(EditAnywhere)
-    float maxStepValue;
+    float maxHeightStepValue;
+
+    UPROPERTY(EditAnywhere)
+    float minOffSetStepValue;
+
+    UPROPERTY(EditAnywhere)
+    float maxOffSetStepValue;
+
+    UPROPERTY(EditAnywhere)
+    float minForStepValue;
+
+    UPROPERTY(EditAnywhere)
+    float maxForStepValue;
 
     UPROPERTY(meta=(BindWidget))
     UButton* leftBTN;

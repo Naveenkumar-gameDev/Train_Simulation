@@ -71,30 +71,30 @@ bool UTrainHUD::Initialize()
     if (heightSpinBox)
     {
         heightSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnHeightSpinBoxChanged);
-        heightSpinBox->SetMinValue(minStepValue);
-        heightSpinBox->SetMaxValue(maxStepValue);
+        heightSpinBox->SetMinValue(minHeightStepValue);
+        heightSpinBox->SetMaxValue(maxHeightStepValue);
 
-        heightSpinBox->SetMinSliderValue(minStepValue);
-        heightSpinBox->SetMaxSliderValue(maxStepValue);
+        heightSpinBox->SetMinSliderValue(minHeightStepValue);
+        heightSpinBox->SetMaxSliderValue(maxHeightStepValue);
 
-        //heightSpinBox->SetMinFractionalDigits(0);
-        //heightSpinBox->SetMaxFractionalDigits(0);
+        heightSpinBox->SetMinFractionalDigits(0);
+        heightSpinBox->SetMaxFractionalDigits(2);
 
         heightSpinBox->SetDelta(1);
 
-        heightSpinBox->SetValue(0);
+        heightSpinBox->SetValue(3.30);
     }
     if (forBackSpinBox)
     {
         forBackSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnForBackSpinBoxChanged);
-        forBackSpinBox->SetMinValue(minStepValue);
-        forBackSpinBox->SetMaxValue(maxStepValue);
+        forBackSpinBox->SetMinValue(minForStepValue);
+        forBackSpinBox->SetMaxValue(maxForStepValue);
 
-        forBackSpinBox->SetMinSliderValue(minStepValue);
-        forBackSpinBox->SetMaxSliderValue(maxStepValue);
+        forBackSpinBox->SetMinSliderValue(minForStepValue);
+        forBackSpinBox->SetMaxSliderValue(maxForStepValue);
 
-        //heightSpinBox->SetMinFractionalDigits(0);
-        //heightSpinBox->SetMaxFractionalDigits(0);
+        forBackSpinBox->SetMinFractionalDigits(0);
+        forBackSpinBox->SetMaxFractionalDigits(2);
 
         forBackSpinBox->SetDelta(1);
 
@@ -103,18 +103,18 @@ bool UTrainHUD::Initialize()
     if (offSetSpinBox)
     {
         offSetSpinBox->OnValueChanged.AddDynamic(this, &UTrainHUD::OnOffSetSpinBoxChanged);
-        offSetSpinBox->SetMinValue(minStepValue);
-        offSetSpinBox->SetMaxValue(maxStepValue);
+        offSetSpinBox->SetMinValue(minOffSetStepValue);
+        offSetSpinBox->SetMaxValue(maxOffSetStepValue);
 
-        offSetSpinBox->SetMinSliderValue(minStepValue);
-        offSetSpinBox->SetMaxSliderValue(maxStepValue);
+        offSetSpinBox->SetMinSliderValue(minOffSetStepValue);
+        offSetSpinBox->SetMaxSliderValue(maxOffSetStepValue);
 
-        //heightSpinBox->SetMinFractionalDigits(0);
-        //heightSpinBox->SetMaxFractionalDigits(0);
+        offSetSpinBox->SetMinFractionalDigits(0);
+        offSetSpinBox->SetMaxFractionalDigits(2);
 
         offSetSpinBox->SetDelta(1);
 
-        offSetSpinBox->SetValue(0);
+        offSetSpinBox->SetValue(2.12);
     }
 
 
@@ -260,21 +260,40 @@ void UTrainHUD::BackBtnClicked()
     forBackSpinBox->SetValue(currentSignal->forbackValue / 100);
 }
 
-void UTrainHUD::OnHeightSpinBoxChanged(float value)
+void UTrainHUD::OnHeightSpinBoxChanged(float Value)
 {
-    value = FMath::Clamp(value, minStepValue, maxStepValue);
-    value *= 100;
-    if (heightSpinBox && currentSignal)
-    {
-        FVector newPos = FVector(currentSignal->GetActorLocation().X, currentSignal->GetActorLocation().Y, currentSignal->startPos.Z + value);
-        currentSignal->SetActorLocation(newPos);
-        currentSignal->heightValue = value;
-    }
+    if (!currentSignal ||
+        !currentSignal->diff ||
+        !currentSignal->lightMeshRef)
+        return;
+
+    Value = FMath::Clamp(
+        Value,
+        minHeightStepValue,
+        maxHeightStepValue
+    );
+
+    float DesiredHeightCM = Value * 100.0f;
+
+    float CurrentHeightCM =
+        currentSignal->lightMeshRef->GetComponentLocation().Z -
+        currentSignal->diff->GetActorLocation().Z;
+
+    // How much the signal needs to move
+    float Difference = DesiredHeightCM - CurrentHeightCM;
+
+    FVector NewLocation = currentSignal->GetActorLocation();
+
+    NewLocation.Z += Difference;
+
+    currentSignal->SetActorLocation(NewLocation);
+
+    currentSignal->heightValue = DesiredHeightCM;
 }
 
 void UTrainHUD::OnForBackSpinBoxChanged(float value)
 {
-    value = FMath::Clamp(value, minStepValue, maxStepValue);
+    value = FMath::Clamp(value, minForStepValue, maxForStepValue);
     value *= 100;
     if (forBackSpinBox && currentSignal)
     {
@@ -283,19 +302,55 @@ void UTrainHUD::OnForBackSpinBoxChanged(float value)
         currentSignal->forbackValue = value;
     }
 }
-
-void UTrainHUD::OnOffSetSpinBoxChanged(float value)
+void UTrainHUD::OnOffSetSpinBoxChanged(float Value)
 {
-    value = FMath::Clamp(value, minStepValue, maxStepValue);
-    value *= 100;
-    if (offSetSpinBox && currentSignal)
-    {
-        FVector newPos = FVector(currentSignal->startPos.X + value , currentSignal->GetActorLocation().Y , currentSignal->GetActorLocation().Z);
-        currentSignal->SetActorLocation(newPos);
-        currentSignal->OffSetValue = value;
-    }
+    if (!currentSignal || !currentSignal->diff)
+        return;
+
+    Value = FMath::Clamp(
+        Value,
+        minOffSetStepValue,
+        maxOffSetStepValue
+    );
+
+    float OffsetCM = Value * 100.0f;
+
+    FVector NewLocation = currentSignal->GetActorLocation();
+
+    NewLocation.X =
+        currentSignal->diff->GetActorLocation().X +
+        (OffsetCM * currentSignal->OffsetDirection);
+
+    currentSignal->SetActorLocation(NewLocation);
+
+    currentSignal->OffSetValue = OffsetCM;
 }
 
+//void UTrainHUD::OnOffSetSpinBoxChanged(float value)
+//{
+//    if (!currentSignal || !currentSignal->diff)
+//        return;
+//
+//    value = FMath::Clamp(
+//        value,
+//        minOffSetStepValue,
+//        maxOffSetStepValue
+//    );
+//
+//    // Convert meters to centimeters
+//    float OffsetInCM = value * 100.0f;
+//
+//    FVector NewPos = currentSignal->GetActorLocation();
+//
+//    float DiffX = currentSignal->diff->GetActorLocation().X;
+//
+//    // Signal position required to maintain entered offset
+//    NewPos.X = DiffX - OffsetInCM;
+//
+//    currentSignal->SetActorLocation(NewPos);
+//
+//    currentSignal->OffSetValue = OffsetInCM;
+//}
 void UTrainHUD::OnOffBtnClicked()
 {
     if (!currentSignal) return;
@@ -349,12 +404,12 @@ void UTrainHUD::OnRestParaBtnClicked()
 
     OnOffBtnClicked();
 
-    offSetSpinBox->SetValue(0);
-    heightSpinBox->SetValue(0);
+    offSetSpinBox->SetValue(2.12);
+    heightSpinBox->SetValue(3.3);
     forBackSpinBox->SetValue(0);
 
-    OnOffSetSpinBoxChanged(0);
-    OnHeightSpinBoxChanged(0);
+    OnOffSetSpinBoxChanged(2.12);
+    OnHeightSpinBoxChanged(3.3);
     OnForBackSpinBoxChanged(0);
 
 }

@@ -104,7 +104,7 @@ void ATrainCpp::DelayFinished()
 	if (TrainHUD)
 	{
 
-		for (AActor* Actor : FoundActors)
+		for (AActor* Actor : FoundVegetation)
 		{
 			if (AVegetation* vegetaion = Cast<AVegetation>(Actor))
 			{

@@ -49,7 +49,14 @@ public:
 
 	ESignalAspect currentAspect = ESignalAspect::Off;
 
+	UPROPERTY(EditAnywhere)
+	AActor* diff;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UStaticMeshComponent* lightMeshRef;
+
+	UPROPERTY(EditAnywhere)
+	float OffsetDirection = 1.0f;
 
 public:	
 	// Called every frame
