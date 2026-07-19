@@ -179,8 +179,6 @@ public:
     UPROPERTY(meta=(BandWidget))
     UTextBlock* distanceTXT;
 
-    UPROPERTY(meta = (BandWidget))
-    UTextBlock* readingTXT;
 
     UFUNCTION()
     void UpdateSignalDistance();

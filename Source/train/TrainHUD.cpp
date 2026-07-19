@@ -374,22 +374,10 @@ void UTrainHUD::UpdateSignalDistance()
 
     float distance = (A.Y - B.Y) / 100;
 
-    int32 RoundedDistance = FMath::RoundToInt(distance);
+    int32 RoundedDistance = FMath::RoundToInt(distance / 1.1f);
     distanceTXT->SetText(FText::AsNumber(FMath::Abs(RoundedDistance)));
 
 
-    float SpeedMS = Train->speed * 0.447f;
-
-    if (SpeedMS > KINDA_SMALL_NUMBER)
-    {
-        float Time = distance / SpeedMS;
-        int32 RoundedTime = FMath::RoundToInt(Time);
-        readingTXT->SetText(FText::AsNumber(RoundedTime));
-    }
-    else
-    {
-        readingTXT->SetText(FText::FromString(TEXT("--")));
-    }
 }
 
 #pragma endregion
