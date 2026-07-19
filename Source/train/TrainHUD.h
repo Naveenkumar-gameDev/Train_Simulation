@@ -176,12 +176,16 @@ public:
 
 #pragma region Signal Distance
 
-    UPROPERTY(meta=(BandWidget))
-    UTextBlock* distanceTXT;
+    UPROPERTY(meta = (BindWidget))
+    USpinBox* distanceSpinBox;
 
+    UFUNCTION()
+    void OnDistanceChanged(float Value);
 
     UFUNCTION()
     void UpdateSignalDistance();
+
+
 
 
 #pragma endregion

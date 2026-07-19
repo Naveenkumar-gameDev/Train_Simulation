@@ -127,6 +127,27 @@ bool UTrainHUD::Initialize()
 
 #pragma endregion
 
+#pragma region  Speed Distance
+    if (distanceSpinBox)
+    {
+        distanceSpinBox->OnValueChanged.AddDynamic(
+            this,
+            &UTrainHUD::OnDistanceChanged
+        );
+
+        distanceSpinBox->SetMinValue(0.0f);
+        distanceSpinBox->SetMaxValue(900.0f);
+
+        distanceSpinBox->SetMinSliderValue(0.0f);
+        distanceSpinBox->SetMaxSliderValue(900.0f);
+
+        distanceSpinBox->SetMinFractionalDigits(0);
+        distanceSpinBox->SetMaxFractionalDigits(0);
+
+        distanceSpinBox->SetDelta(1.0f);
+    }
+#pragma endregion
+
     return true;
 }
 
@@ -366,20 +387,66 @@ void UTrainHUD::OnSignalSelected(FString SelectedItem, ESelectInfo::Type Selecte
 #pragma region Speed Distance
 
 
+//void UTrainHUD::UpdateSignalDistance()
+//{
+//    if (!currentSignal || !Train) return;
+//    FVector A = Train->GetActorLocation();
+//    FVector B = currentSignal->GetActorLocation();
+//
+//    float distance = (A.Y - B.Y) / 100;
+//
+//    int32 RoundedDistance = FMath::RoundToInt(distance / 1.1f);
+//    distanceTXT->SetText(FText::AsNumber(FMath::Abs(RoundedDistance)));
+//
+//}
 void UTrainHUD::UpdateSignalDistance()
 {
-    if (!currentSignal || !Train) return;
-    FVector A = Train->GetActorLocation();
-    FVector B = currentSignal->GetActorLocation();
+    if (!currentSignal || !Train || !distanceSpinBox)
+        return;
 
-    float distance = (A.Y - B.Y) / 100;
+    FVector TrainLocation = Train->GetActorLocation();
+    FVector SignalLocation = currentSignal->GetActorLocation();
 
-    int32 RoundedDistance = FMath::RoundToInt(distance / 1.1f);
-    distanceTXT->SetText(FText::AsNumber(FMath::Abs(RoundedDistance)));
+    float Distance = FMath::Abs(
+        (TrainLocation.Y - SignalLocation.Y) / 100.0f
+    );
 
+    Distance = FMath::Clamp(Distance, 0.0f, 900.0f);
 
+    bUpdatingUI = true;
+
+    distanceSpinBox->SetValue(
+        FMath::RoundToInt(Distance)
+    );
+
+    bUpdatingUI = false;
 }
 
+void UTrainHUD::OnDistanceChanged(float Value)
+{
+    if (bUpdatingUI)
+        return;
+
+    if (!currentSignal || !Train)
+        return;
+
+    Value = FMath::Clamp(Value, 0.0f, 900.0f);
+
+    // Convert meters to Unreal centimeters
+    float DistanceInCM = Value * 100.0f;
+
+    FVector TrainLocation = Train->Track->GetLocationAtDistanceAlongSpline(DistanceInCM,ESplineCoordinateSpace::World);
+    FRotator TrainRotation = Train->Track->GetRotationAtDistanceAlongSpline(DistanceInCM, ESplineCoordinateSpace::World);
+    //FVector SignalLocation = currentSignal->GetActorLocation();
+
+
+    // Put train before the signal on Y axis
+    //TrainLocation.Y = SignalLocation.Y - DistanceInCM;
+
+    Train->SetSpeed(0);
+    Train->SetActorLocation(TrainLocation);
+    Train->SetActorRotation(TrainRotation);
+}
 #pragma endregion
 
 void UTrainHUD::OnVegOnOFfBtnClicked()
