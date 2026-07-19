@@ -3,6 +3,7 @@
 
 #include "TrainCpp.h"
 #include "Kismet/GameplayStatics.h"
+#include "Vegetation.h"
 #include "TrainHUD.h"
 // Sets default values
 ATrainCpp::ATrainCpp()
@@ -91,10 +92,40 @@ void ATrainCpp::DelayFinished()
 				TrainHUD->currentSignal = Signal;
 		}
 	}
+
+	TArray<AActor*> FoundVegetation;
+
+	UGameplayStatics::GetAllActorsOfClass(
+		GetWorld(),
+		AVegetation::StaticClass(),
+		FoundVegetation
+	);
+
 	if (TrainHUD)
 	{
-		AActor* vegetaion = Cast<AActor>(UGameplayStatics::GetActorOfClass(GetWorld(), VegetationClass));
-		TrainHUD->VegHISM=vegetaion->FindComponentByClass<UHierarchicalInstancedStaticMeshComponent>();
+
+		for (AActor* Actor : FoundActors)
+		{
+			if (AVegetation* vegetaion = Cast<AVegetation>(Actor))
+			{
+				if (vegetaion->ID == 1)
+				{
+					TrainHUD->Veg1HISM = vegetaion->FindComponentByClass<UHierarchicalInstancedStaticMeshComponent>();
+					continue;
+				}
+				if (vegetaion->ID == 2)
+				{
+					TrainHUD->Veg2HISM = vegetaion->FindComponentByClass<UHierarchicalInstancedStaticMeshComponent>();
+					continue;
+				}
+				if (vegetaion->ID == 3)
+				{
+					TrainHUD->Veg3HISM = vegetaion->FindComponentByClass<UHierarchicalInstancedStaticMeshComponent>();
+					continue;
+				}
+			}
+		}
+		
 
 	}
 }

@@ -118,10 +118,22 @@ protected:
     UComboBoxString* signalComboBox;
 
     UPROPERTY(meta= (BindWidget))
-    UButton* vegOnOff_BTN;
+    UButton* vegOnOff1_BTN;
 
     UPROPERTY(meta=(BindWidget))
-    UImage* vegBar_Image;
+    UImage* vegBar1_Image;
+
+    UPROPERTY(meta= (BindWidget))
+    UButton* vegOnOff2_BTN;
+
+    UPROPERTY(meta=(BindWidget))
+    UImage* vegBar2_Image;
+
+    UPROPERTY(meta= (BindWidget))
+    UButton* vegOnOff3_BTN;
+
+    UPROPERTY(meta=(BindWidget))
+    UImage* vegBar3_Image;
 
     UFUNCTION()
     void LeftBtnClicked();
@@ -161,16 +173,32 @@ protected:
     void OnSignalSelected(FString SelectedItem, ESelectInfo::Type SelectedType);
 
     UFUNCTION()
-    void OnVegOnOFfBtnClicked();
+    void OnVeg1OnOFfBtnClicked();
+
+    UFUNCTION()
+    void OnVeg2OnOFfBtnClicked();
+
+    UFUNCTION()
+    void OnVeg3OnOFfBtnClicked();
 
 public:
     UPROPERTY(BlueprintReadWrite)
     ASignal* currentSignal;
 
-    UHierarchicalInstancedStaticMeshComponent* VegHISM;
+    UHierarchicalInstancedStaticMeshComponent* Veg1HISM;
 
     UPROPERTY(BlueprintReadOnly)
-    bool isVegOn = true;
+    bool isVeg1On = true;
+
+    UHierarchicalInstancedStaticMeshComponent* Veg2HISM;
+
+    UPROPERTY(BlueprintReadOnly)
+    bool isVeg2On = true;
+
+    UHierarchicalInstancedStaticMeshComponent* Veg3HISM;
+
+    UPROPERTY(BlueprintReadOnly)
+    bool isVeg3On = true;
 
 #pragma endregion
 

@@ -9,6 +9,7 @@
 #include "TrainCpp.generated.h"
 class UTrainHUD;
 class ASignal;
+class AVegetation;
 
 UCLASS()
 class TRAIN_API ATrainCpp : public APawn
@@ -47,9 +48,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "VALUE")
 	TSubclassOf<AActor> TrackClass;
 
-	UPROPERTY(EditAnywhere, Category="VALUE")
-	TSubclassOf<AActor> VegetationClass;
-
 #pragma region SpeedControl
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VALUE")
@@ -67,7 +65,6 @@ public:
 public:
 	UPROPERTY(BlueprintReadWrite) 
 	TArray<ASignal*> SignalArray;
-
 
 
 

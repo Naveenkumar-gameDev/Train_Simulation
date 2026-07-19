@@ -122,8 +122,14 @@ bool UTrainHUD::Initialize()
 
 #pragma region Vegetation
 
-    if (vegOnOff_BTN)
-        vegOnOff_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVegOnOFfBtnClicked);
+    if (vegOnOff1_BTN)
+        vegOnOff1_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVeg1OnOFfBtnClicked);
+
+    if (vegOnOff2_BTN)
+        vegOnOff2_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVeg2OnOFfBtnClicked);
+
+    if (vegOnOff3_BTN)
+        vegOnOff3_BTN->OnClicked.AddDynamic(this, &UTrainHUD::OnVeg3OnOFfBtnClicked);
 
 #pragma endregion
 
@@ -386,19 +392,6 @@ void UTrainHUD::OnSignalSelected(FString SelectedItem, ESelectInfo::Type Selecte
 
 #pragma region Speed Distance
 
-
-//void UTrainHUD::UpdateSignalDistance()
-//{
-//    if (!currentSignal || !Train) return;
-//    FVector A = Train->GetActorLocation();
-//    FVector B = currentSignal->GetActorLocation();
-//
-//    float distance = (A.Y - B.Y) / 100;
-//
-//    int32 RoundedDistance = FMath::RoundToInt(distance / 1.1f);
-//    distanceTXT->SetText(FText::AsNumber(FMath::Abs(RoundedDistance)));
-//
-//}
 void UTrainHUD::UpdateSignalDistance()
 {
     if (!currentSignal || !Train || !distanceSpinBox)
@@ -427,43 +420,101 @@ void UTrainHUD::OnDistanceChanged(float Value)
     if (bUpdatingUI)
         return;
 
-    if (!currentSignal || !Train)
+    if (!currentSignal || !Train || !Train->Track)
         return;
 
     Value = FMath::Clamp(Value, 0.0f, 900.0f);
 
-    // Convert meters to Unreal centimeters
+    // Convert entered meters to Unreal centimeters
     float DistanceInCM = Value * 100.0f;
 
-    FVector TrainLocation = Train->Track->GetLocationAtDistanceAlongSpline(DistanceInCM,ESplineCoordinateSpace::World);
-    FRotator TrainRotation = Train->Track->GetRotationAtDistanceAlongSpline(DistanceInCM, ESplineCoordinateSpace::World);
-    //FVector SignalLocation = currentSignal->GetActorLocation();
+    // Find signal's distance from the start of the spline
+    float SignalSplineDistance =
+        Train->Track->GetDistanceAlongSplineAtLocation(
+            currentSignal->GetActorLocation(),
+            ESplineCoordinateSpace::World
+        );
 
+    // Place train requested distance BEFORE signal
+    float NewTrainDistance = SignalSplineDistance - DistanceInCM;
 
-    // Put train before the signal on Y axis
-    //TrainLocation.Y = SignalLocation.Y - DistanceInCM;
+    // Prevent going before start of spline
+    NewTrainDistance = FMath::Max(0.0f, NewTrainDistance);
 
-    Train->SetSpeed(0);
-    Train->SetActorLocation(TrainLocation);
-    Train->SetActorRotation(TrainRotation);
+    // This is enough because Tick() uses currentLocation
+    Train->currentLocation = NewTrainDistance;
+    FRotator TargetRotation = Train->Track->GetRotationAtDistanceAlongSpline(
+        Train->currentLocation,
+        ESplineCoordinateSpace::World);
+
+    Train->SetActorRotation(TargetRotation);
+    // Stop train after snapping
+    Train->SetSpeed(0.0f);
+
+    UE_LOG(LogTemp, Warning,
+        TEXT("Signal: %f | Input: %f | Train: %f"),
+        SignalSplineDistance,
+        DistanceInCM,
+        NewTrainDistance
+    );
 }
 #pragma endregion
 
-void UTrainHUD::OnVegOnOFfBtnClicked()
+#pragma region Vegetation
+void UTrainHUD::OnVeg1OnOFfBtnClicked()
 {
-    if (!VegHISM) return;
-    if (isVegOn)
+    if (!Veg1HISM) return;
+    if (isVeg1On)
     {
-        VegHISM->SetVisibility(false);
-        vegOnOff_BTN->SetBackgroundColor(FLinearColor::Black);
-        vegBar_Image->SetRenderTranslation(FVector2D(-49.0f, 0.0f));
-        isVegOn = false;
+        Veg1HISM->SetVisibility(false);
+        vegOnOff1_BTN->SetBackgroundColor(FLinearColor::Black);
+        vegBar1_Image->SetRenderTranslation(FVector2D(-49.0f, 0.0f));
+        isVeg1On = false;
     }
     else
     {
-        VegHISM->SetVisibility(true);
-        vegOnOff_BTN->SetBackgroundColor(FLinearColor(0.0f, 1.0f, 1.0f));
-        vegBar_Image->SetRenderTranslation(FVector2D(49.0f, 0.0f));
-        isVegOn = true;
+        Veg1HISM->SetVisibility(true);
+        vegOnOff1_BTN->SetBackgroundColor(FLinearColor(0.0f, 1.0f, 1.0f));
+        vegBar1_Image->SetRenderTranslation(FVector2D(49.0f, 0.0f));
+        isVeg1On = true;
     }
 }
+
+void UTrainHUD::OnVeg2OnOFfBtnClicked()
+{
+    if (!Veg2HISM) return;
+    if (isVeg2On)
+    {
+        Veg2HISM->SetVisibility(false);
+        vegOnOff2_BTN->SetBackgroundColor(FLinearColor::Black);
+        vegBar2_Image->SetRenderTranslation(FVector2D(-49.0f, 0.0f));
+        isVeg2On = false;
+    }
+    else
+    {
+        Veg2HISM->SetVisibility(true);
+        vegOnOff2_BTN->SetBackgroundColor(FLinearColor(0.0f, 1.0f, 1.0f));
+        vegBar2_Image->SetRenderTranslation(FVector2D(49.0f, 0.0f));
+        isVeg2On = true;
+    }
+}
+
+void UTrainHUD::OnVeg3OnOFfBtnClicked()
+{
+    if (!Veg3HISM) return;
+    if (isVeg3On)
+    {
+        Veg3HISM->SetVisibility(false);
+        vegOnOff3_BTN->SetBackgroundColor(FLinearColor::Black);
+        vegBar3_Image->SetRenderTranslation(FVector2D(-49.0f, 0.0f));
+        isVeg3On = false;
+    }
+    else
+    {
+        Veg3HISM->SetVisibility(true);
+        vegOnOff3_BTN->SetBackgroundColor(FLinearColor(0.0f, 1.0f, 1.0f));
+        vegBar3_Image->SetRenderTranslation(FVector2D(49.0f, 0.0f));
+        isVeg3On = true;
+    }
+}
+#pragma endregion
